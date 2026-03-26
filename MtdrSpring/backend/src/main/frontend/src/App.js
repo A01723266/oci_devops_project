@@ -24,6 +24,8 @@ import Moment from 'react-moment';
  * one with the items that are already done.
  */
 function App() {
+    // add mode for light/dark switch
+    const [darkMode, setDarkMode] = useState(false);
     // isLoading is true while waiting for the backend to return the list
     // of items. We use this state to display a spinning circle:
     const [isLoading, setLoading] = useState(false);
@@ -184,8 +186,13 @@ function App() {
       );
     }
     return (
-      <div className="App">
-        <h1>MY TODO LIST</h1>
+      <div className={"App" + (darkMode ? " dark" : "")}>
+        <div className="headerRow">
+          <h1>MY TODOS</h1>
+          <Button size="small" onClick={() => setDarkMode(!darkMode)}>
+            {darkMode ? '☀️ Light' : '🌙 Dark'}
+          </Button>
+        </div>
         <NewItem addItem={addItem} isInserting={isInserting}/>
         { error &&
           <p>Error: {error.message}</p>
@@ -200,7 +207,7 @@ function App() {
           {items.map(item => (
             !item.done && (
             <tr key={item.id}>
-              <td className="description">{item.description}</td>
+              <td className={"description" + (item.done ? " done" : "")}>{item.description}</td>
               { /*<td>{JSON.stringify(item, null, 2) }</td>*/ }
               <td className="date"><Moment format="MMM Do hh:mm:ss">{item.createdAt}</Moment></td>
               <td><Button variant="contained" className="DoneButton" onClick={(event) => toggleDone(event, item.id, item.description, !item.done)} size="small">
@@ -219,7 +226,7 @@ function App() {
             item.done && (
 
             <tr key={item.id}>
-              <td className="description">{item.description}</td>
+              <td className={"description" + (item.done ? " done" : "")}>{item.description}</td>
               <td className="date"><Moment format="MMM Do hh:mm:ss">{item.createdAt}</Moment></td>
               <td><Button variant="contained" className="DoneButton" onClick={(event) => toggleDone(event, item.id, item.description, !item.done)} size="small">
                     Undo

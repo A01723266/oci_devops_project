@@ -33,7 +33,7 @@ function NewItem(props) {
     <form>
       <input
         id="newiteminput"
-        placeholder="New item"
+        placeholder="Describe tu tarea"
         type="text"
         autoComplete="off"
         value={item}
